@@ -2,17 +2,17 @@ import textract
 import glob
 from parser import parse_other_exchange, parse_direct_trade, parse_sparplan
 from merger import merge_summaries
+import tqdm
 
 files = glob.glob("post/*.pdf")
 
 dataframes = []
 
-for file in files:
+for file in tqdm.tqdm(files):
     t = textract.process(file)
     text = t.decode("utf-8")
 
     if "Wertpapierabrechnung" not in text:
-        print(f"skpping {file}")
         continue
 
     if "Sparplan" in text:
