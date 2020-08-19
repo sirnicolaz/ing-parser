@@ -26,3 +26,4 @@ pip install -r requirements.txt
 * Paste the content inside a file named `curl.txt`
 * Execute `sh get_post.sh`
 * You will find a summary inside summary.tsv 
+BEWARE: you need to be logged in while the script is running.
