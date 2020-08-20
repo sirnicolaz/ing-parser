@@ -3,10 +3,12 @@ import pandas as pd
 
 
 def __clean_up(text: str) -> str:
+    r = re.compile("Zwischensumme.*1 von [1-3]", re.DOTALL)
+    text = re.sub(r, "Zwischensumme", text)
     r = re.compile("Depotinhaber.*1 von [1-3]", re.DOTALL)
     text = re.sub(r, "", text)
-    r = re.compile("ING-.*10247 Berlin", re.DOTALL)
-    text = re.sub(r, "", text)
+    r = re.compile("ING-.*Wertpapierabrechnung", re.DOTALL)
+    text = re.sub(r, "Wertpapierabrechnung", text)
 
     return text
 
@@ -97,7 +99,7 @@ def parse_sparplan(text: str) -> pd.DataFrame:
     columns = re.findall(r, text)[0].replace("\n\n", "\n").split("\n")
     text = re.sub(r, "", text)
 
-    r = re.compile("Nominale.*Provision", re.DOTALL)
+    r = re.compile("Nominale.*(?:Provision|Zwischensumme)", re.DOTALL)
     columns = columns + re.findall(r, text)[0].replace("\n\n", "\n").split("\n") + ["Endbetrag"]
     text = re.sub(r, "", text)
 
@@ -109,7 +111,7 @@ def parse_sparplan(text: str) -> pd.DataFrame:
     values_2 = re.findall(r, text)[0].replace("\n\n", "\n").strip().split("\n")[:-1]
     values_2 = values_2[:-3] + ["", ""] + values_2[-3:]
 
-    while len(values_2) > 11:
+    while len(values_2) > len(columns):
         values_2[3] = f"{values_2[3]} {values_2[4]}"
         del values_2[4]
 
