@@ -21,8 +21,8 @@ pip install -r requirements.txt
 ## Instructions
 * Access your ING account
 * Open the inspector, on the network tab
-* Access the Post box page
-* Select the page request, right click and "Copy as cURL"
+* Access the Post box page. 
+* Select the page request, right click and "Copy as cURL". Pay attention to grab the request that responds with 200, not the 302 redirect.
 * Paste the content inside a file named `curl.txt`
 * Execute `sh get_post.sh`
 * You will find a summary inside summary.tsv 
