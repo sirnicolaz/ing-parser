@@ -15,7 +15,7 @@ for file in tqdm.tqdm(files):
     if "Wertpapierabrechnung" not in text:
         continue
 
-    if "Sparplan" in text:
+    if "Sparplan" in text or "Zwischensumme" in text:
         new_df = parse_sparplan(text)
     elif "Handelsplatzgeb" in text:
         new_df = parse_other_exchange(text)
